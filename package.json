@@ -1,0 +1,16 @@
+{
+  "name": "nodemail",
+  "version": "1.0.0",
+  "description": "Simple Nodemailer Example",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemailer": "^6.4.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "sumit22vas",
+  "license": "ISC"
+}

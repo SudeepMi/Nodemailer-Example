@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <!-- Compiled and minified CSS -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        @media (min-width : 1200px) {
+            .card {
+                margin-left: auto; width: 60%; margin-right: auto;
+            }
+        }
+    </style>
+  </head>
+
+  <body>
+
+  <div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2 class="header center">CONTACT US</h2>
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-content">
+                    <div class="row">
+                          <div class="row">
+                            <div class="input-field col s6">
+                              <i class="material-icons prefix">account_circle</i>
+                              <input id="name" type="text" class="validate">
+                              <label for="name">Your Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                              <i class="material-icons prefix">phone</i>
+                              <input id="phone" type="tel" class="validate">
+                              <label for="phone">Telephone</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">mail</i>
+                                <input id="mail" type="tel" class="validate">
+                                <label for="mail">Your Email</label>
+                              </div>
+                              <div class="input-field col s12">
+                                <i class="material-icons prefix">message</i>
+                                <textarea id="msg" class="materialize-textarea"></textarea>
+                                <label for="msg">Your Message</label>
+                              </div>
+                          </div>
+                      </div>
+                </div>
+                <div class="card-action">
+                    <button class="btn waves-effect waves-light red accent-2" name="sendBtn" id="sendBtn">SEND
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+  </div>
+    
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script type="text/Javascript">
+      const name = document.querySelector('#name');
+      const phone = document.querySelector('#phone');
+      const email = document.querySelector('#mail');
+      const msg =  document.querySelector('#msg');
+      
+      const sendBtn = document.querySelector('#sendBtn');
+      sendBtn.addEventListener('click',sendRequest);
+      function sendRequest(e) {
+        e.preventDefault();
+
+        const data = {
+            name : name.value,
+            phone : phone.value,
+            email : email.value,
+            msg : msg.value          
+        };
+        // We will be doing server side validation ////
+        fetch('/sendmail',{
+          method : 'post',
+          headers : {
+            'Content-Type' : 'application/json'
+          },
+          body : JSON.stringify(data)
+        }).
+          then((res)=>{
+            return res.json();
+          })
+            .then((data)=> {
+              if (data.msg === 'Success') {
+                name.value ='';phone.value="";email.value="",msg.value="";  
+                M.toast({html: 'Mail Success fully Sent !!!',classes: 'rounded'});
+              }else {
+                M.toast({html: data.msg});
+              }         
+            })
+              .catch((err)=>{
+                console.log(err);
+              });
+      }
+    </script>
+  </body>
+</html>
